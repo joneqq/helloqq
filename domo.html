@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="put">
+    <p id="error" style="color: red">不能超过10字长</p>
+    <button id="btn">不再提示</button>
+    <script>
+        var input = document.getElementById('put')
+        var errorMsg = document.getElementById('error')
+        var btn=document.getElementById('btn')
+
+        btn.addEventListener('click', function () {
+            setState({
+                error: false,
+                btn: true
+            })
+        })
+
+        var state = {
+            value: "",
+            error: false,
+            btn: true
+
+        }
+        var setState = function (newState) {
+            state = {
+                ...state,
+                ...newState
+            }
+            runder()
+        }
+
+        var runder = function () {
+            input.value = state.value
+            if (state.error) {
+                errorMsg.style.display = 'block',
+                btn.style.display='block'
+            }
+            else {
+                errorMsg.style.display = 'none'
+                btn.style.display='none'
+            }
+        }
+
+        var langInput = function (value) {
+            if (value.length<=10) {
+                setState({
+                    value: value
+                })
+            }
+            else {
+                setState({
+                    error:true
+                })
+            }
+        }
+
+        input.addEventListener('input', function () {
+            langInput(this.value)
+        })
+        runder()
+    </script>
+</body>
+
+</html>
